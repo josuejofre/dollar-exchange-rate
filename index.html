@@ -49,11 +49,30 @@
         <div class="webparts-container">
             <div class="webpart">
                 <h2>TradingView - Cotação</h2>
-                <iframe src="https://br.tradingview.com/symbols/USDBRL/" title="TradingView USD/BRL" allowfullscreen></iframe>
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container" style="height:100%;width:100%">
+                  <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                  {
+                  "autosize": true,
+                  "symbol": "USDBRL",
+                  "interval": "D",
+                  "timezone": "America/Sao_Paulo",
+                  "theme": "dark",
+                  "style": "1",
+                  "locale": "br",
+                  "enable_publishing": false,
+                  "allow_symbol_change": false,
+                  "support_host": "https://www.tradingview.com"
+                }
+                  </script>
+                </div>
+                <!-- TradingView Widget END -->
             </div>
-            <div class="webpart">
+            <div class="webpart xe-fallback">
                 <h2>XE - Conversor</h2>
-                <iframe src="https://www.xe.com/pt/currencyconverter/convert/?Amount=1&From=USD&To=BRL" title="XE Currency Converter" allowfullscreen></iframe>
+                <p>O site do XE não permite ser incorporado diretamente nesta página (conexão recusada por segurança deles). Acesse pelo link abaixo:</p>
+                <a href="https://www.xe.com/pt/currencyconverter/convert/?Amount=1&From=USD&To=BRL" target="_blank" class="external-link-btn">Abrir Conversor XE em nova aba</a>
             </div>
         </div>
     </div>
