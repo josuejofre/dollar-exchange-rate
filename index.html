@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotação Dólar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cotação Dólar (USD) vs Real (BRL)</h1>
+        <button id="refresh-btn">Atualizar Cotações</button>
+        <div id="loading">Carregando...</div>
+        <div class="cards-container">
+            <div class="card">
+                <h2>Fonte: AwesomeAPI</h2>
+                <p><strong>Compra:</strong> <span id="awesome-bid">-</span></p>
+                <p><strong>Venda:</strong> <span id="awesome-ask">-</span></p>
+                <p><strong>Variação:</strong> <span id="awesome-varbid">-</span></p>
+                <p><strong>Máximo:</strong> <span id="awesome-high">-</span></p>
+                <p><strong>Mínimo:</strong> <span id="awesome-low">-</span></p>
+                <p class="timestamp">Atualizado em: <span id="awesome-timestamp">-</span></p>
+            </div>
+            <div class="card">
+                <h2>Fonte: Foxbit</h2>
+                <p><strong>Último Preço:</strong> <span id="foxbit-last">-</span></p>
+                <p><strong>Variação 24h:</strong> <span id="foxbit-change">-</span>%</p>
+                <p><strong>Volume 24h:</strong> <span id="foxbit-volume">-</span></p>
+                <p class="timestamp">Atualizado em: <span id="foxbit-timestamp">-</span></p>
+            </div>
+        </div>
+
+        <div class="calculator">
+            <h2>Calculadora de Custo</h2>
+            <div class="calc-row">
+                <label for="avg-rate">Média da Cotação (Venda/Último):</label>
+                <span id="avg-rate">-</span>
+            </div>
+            <div class="calc-row">
+                <label for="markup-percentage">Markup (%):</label>
+                <input type="number" id="markup-percentage" step="0.01" value="0.00">
+            </div>
+            <div class="calc-row final-value">
+                <label>Valor Final com Markup:</label>
+                <span id="final-value">-</span>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
