@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const awesomeLow = document.getElementById('awesome-low');
     const awesomeTimestamp = document.getElementById('awesome-timestamp');
 
-    const foxbitLast = document.getElementById('foxbit-last');
-    const foxbitChange = document.getElementById('foxbit-change');
-    const foxbitVolume = document.getElementById('foxbit-volume');
-    const foxbitTimestamp = document.getElementById('foxbit-timestamp');
+    const binanceLast = document.getElementById('binance-last');
+    const binanceChange = document.getElementById('binance-change');
+    const binanceVolume = document.getElementById('binance-volume');
+    const binanceTimestamp = document.getElementById('binance-timestamp');
 
     const avgRateEl = document.getElementById('avg-rate');
     const markupInput = document.getElementById('markup-percentage');
@@ -19,25 +19,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingEl = document.getElementById('loading');
 
     const API1_URL = 'https://economia.awesomeapi.com.br/json/last/USD-BRL';
-    const API2_URL = 'https://api.foxbit.com.br/v3/markets/usdtbrl/ticker';
+    const API2_URL = 'https://api.binance.com/api/v3/ticker/24hr?symbol=USDTBRL';
 
     let awesomeApiRate = 0;
-    let foxbitApiRate = 0;
+    let binanceApiRate = 0;
 
     async function fetchRates() {
         loadingEl.style.display = 'block';
         try {
-            const [awesomeResponse, foxbitResponse] = await Promise.all([
+            const [awesomeResponse, binanceResponse] = await Promise.all([
                 fetch(API1_URL),
                 fetch(API2_URL)
             ]);
 
-            if (!awesomeResponse.ok || !foxbitResponse.ok) {
+            if (!awesomeResponse.ok || !binanceResponse.ok) {
                 throw new Error('Erro ao buscar dados das APIs.');
             }
 
             const awesomeData = await awesomeResponse.json();
-            const foxbitData = await foxbitResponse.json();
+            const binanceData = await binanceResponse.json();
             
             // AwesomeAPI
             const { bid, ask, varBid, high, low, create_date } = awesomeData.USDBRL;
@@ -49,14 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
             awesomeLow.textContent = formatCurrency(low);
             awesomeTimestamp.textContent = new Date(create_date).toLocaleString('pt-BR');
 
-            // Foxbit
-            const { last, quote_volume_24h, high_24h, low_24h, open_24h } = foxbitData;
-            foxbitApiRate = parseFloat(last);
-            const change = ((last - open_24h) / open_24h) * 100;
-            foxbitLast.textContent = formatCurrency(last);
-            foxbitChange.textContent = change.toFixed(2);
-            foxbitVolume.textContent = parseFloat(quote_volume_24h).toFixed(2);
-            foxbitTimestamp.textContent = new Date().toLocaleString('pt-BR');
+            // Binance
+            const { lastPrice, volume, priceChangePercent } = binanceData;
+            binanceApiRate = parseFloat(lastPrice);
+            binanceLast.textContent = formatCurrency(lastPrice);
+            binanceChange.textContent = parseFloat(priceChangePercent).toFixed(2);
+            binanceVolume.textContent = parseFloat(volume).toFixed(2);
+            binanceTimestamp.textContent = new Date().toLocaleString('pt-BR');
 
             calculateValues();
 
@@ -69,8 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function calculateValues() {
-        if (awesomeApiRate > 0 && foxbitApiRate > 0) {
-            const average = (awesomeApiRate + foxbitApiRate) / 2;
+        if (awesomeApiRate > 0 && binanceApiRate > 0) {
+            const average = (awesomeApiRate + binanceApiRate) / 2;
             avgRateEl.textContent = formatCurrency(average);
 
             const markupPercentage = parseFloat(markupInput.value) || 0;
