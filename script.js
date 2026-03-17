@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const avgRateEl = document.getElementById('avg-rate');
     const markupInput = document.getElementById('markup-percentage');
-    const amountInput = document.getElementById('amount-brl');
+    const amountInput = document.getElementById('amount-usd');
     const finalRateEl = document.getElementById('final-rate');
     const finalTotalEl = document.getElementById('final-total');
 
@@ -75,20 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
             avgRateEl.textContent = formatCurrency(average);
 
             const markupPercentage = parseFloat(markupInput.value) || 0;
-            const amountBrl = parseFloat(amountInput.value) || 0;
+            const amountUsd = parseFloat(amountInput.value) || 0;
 
             const rateMarkupValue = average * (markupPercentage / 100);
             const finalRate = average + rateMarkupValue;
 
             finalRateEl.textContent = formatCurrency(finalRate);
 
-            if (amountBrl > 0 && finalRate > 0) {
-                // If they have BRL and want USD, you divide BRL / finalRate
-                // Example: 200 BRL / 5.5 final rate = 36.36 USD
-                // But the label says "Valor total + Markup", maybe he means Value * finalRate?
-                // Typically you convert BRL to USD so the result is in USD. Let's do BRL / finalRate
-                const totalUsd = amountBrl / finalRate;
-                finalTotalEl.textContent = parseFloat(totalUsd).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+            if (amountUsd > 0 && finalRate > 0) {
+                const totalBrl = amountUsd * finalRate;
+                finalTotalEl.textContent = parseFloat(totalBrl).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
             } else {
                 finalTotalEl.textContent = '-';
             }
