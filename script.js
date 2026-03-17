@@ -92,7 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function formatCurrency(value) {
-        return parseFloat(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        return parseFloat(value).toLocaleString('pt-BR', { 
+            style: 'currency', 
+            currency: 'BRL',
+            minimumFractionDigits: 4,
+            maximumFractionDigits: 4
+        });
     }
 
     refreshBtn.addEventListener('click', fetchRates);
